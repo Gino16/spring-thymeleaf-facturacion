@@ -35,15 +35,16 @@
                     <td th:text="${cliente.createAt}"></td>
                     <td>
                         <a class="btn btn-primary btn-sm" th:href="@{/form/} + ${cliente.id}" th:text="'Editar'"></a>
-                        <a class="btn btn-danger btn-sm" th:href="@{/eliminar/} + ${cliente.id}" th:text="'Eliminar'" onclick="return confirm('Seguro de eliminar?')"></a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/eliminar/} + ${cliente.id}" th:text="'Eliminar'"
+                           onclick="return confirm('Seguro de eliminar?')"></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+
+            <nav th:replace="paginator-nav::paginator"></nav>
         </div>
     </div>
-
-
 
 
 </div>
