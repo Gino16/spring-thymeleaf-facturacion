@@ -1,7 +1,7 @@
 package com.sistema.facturacion.controllers;
 
-import com.sistema.facturacion.models.dao.IClienteDao;
 import com.sistema.facturacion.models.entity.Cliente;
+import com.sistema.facturacion.models.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +20,12 @@ import java.util.Map;
 public class ClienteController {
 
     @Autowired
-    private IClienteDao clienteDao;
+    private IClienteService clienteService;
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(Model model) {
         model.addAttribute("titulo", "Listado de Clientes");
-        model.addAttribute("clientes", clienteDao.findAll());
+        model.addAttribute("clientes", clienteService.findAll());
         return "listar";
     }
 
@@ -45,7 +45,7 @@ public class ClienteController {
             return "form";
         }
 
-        clienteDao.save(cliente);
+        clienteService.save(cliente);
         status.setComplete();
         return "redirect:listar";
     }
@@ -54,12 +54,20 @@ public class ClienteController {
     public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model){
         Cliente cliente = null;
         if (id > 0){
-            cliente = clienteDao.findOne(id);
+            cliente = clienteService.findOne(id);
         } else {
             return "redirect:/listar";
         }
         model.put("cliente", cliente);
         model.put("titulo", "Editar Cliente");
         return "form";
+    }
+
+    @RequestMapping(value = "/eliminar/{id}")
+    public String eliminar(@PathVariable Long id){
+        if (id > 0){
+            clienteService.delete(id);
+        }
+        return "redirect:/listar";
     }
 }
