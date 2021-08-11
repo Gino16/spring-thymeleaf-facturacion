@@ -1,7 +1,11 @@
 package com.sistema.facturacion.models.service;
 
 import com.sistema.facturacion.models.dao.IClienteDao;
+import com.sistema.facturacion.models.dao.IFacturaDao;
+import com.sistema.facturacion.models.dao.IProductoDao;
 import com.sistema.facturacion.models.entity.Cliente;
+import com.sistema.facturacion.models.entity.Factura;
+import com.sistema.facturacion.models.entity.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +19,12 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Autowired
     private IClienteDao clienteDao;
+
+    @Autowired
+    private IProductoDao productoDao;
+
+    @Autowired
+    private IFacturaDao facturaDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -44,5 +54,17 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional
     public void delete(Long id) {
         clienteDao.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findByNombre(String term) {
+        return productoDao.findByNombreLikeIgnoreCase("%" + term + "%");
+    }
+
+    @Override
+    @Transactional
+    public void saveFactura(Factura factura){
+        facturaDao.save(factura);
     }
 }

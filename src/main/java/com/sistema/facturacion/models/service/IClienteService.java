@@ -1,6 +1,8 @@
 package com.sistema.facturacion.models.service;
 
 import com.sistema.facturacion.models.entity.Cliente;
+import com.sistema.facturacion.models.entity.Factura;
+import com.sistema.facturacion.models.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,5 +18,9 @@ public interface IClienteService {
     public Cliente findOne(Long id);
 
     public void delete(Long id);
+
+    public List<Producto> findByNombre(String term);
+
+    public void saveFactura(Factura factura);
 
 }
