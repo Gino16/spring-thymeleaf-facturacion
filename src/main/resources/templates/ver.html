@@ -24,7 +24,7 @@
             <div th:if="${#lists.isEmpty(cliente.facturas)}" class="alert alert-info my-4"
                  th:text="'No hay factura asignada para cliente ' + ${cliente.nombre} + ', ' + ${cliente.apellido}"></div>
 
-            <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-striped my-4">
+            <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-striped table-hover my-4">
                 <thead>
                 <tr>
                     <th>Folio</th>

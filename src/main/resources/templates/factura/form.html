@@ -26,7 +26,10 @@
                 <div class="input-group row my-3">
                     <label for="descripcion" class="col-sm-2 col-form-label" th:text="'Descripcion:'"></label>
                     <div class="col-sm-6">
-                        <input id="descripcion" type="text" th:field="*{descripcion}" class="form-control">
+                        <input id="descripcion" type="text" th:field="*{descripcion}" class="form-control"
+                               th:errorclass="'form-control is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}"
+                             th:errors="*{descripcion}"></div>
                     </div>
                 </div>
 
