@@ -16,7 +16,7 @@
             <h4 class="card-title">
                 <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary btn-sm" th:href="@{/form}">Registrar
                     Cliente</a>
-                <a th:href="@{'/listar'(format=csv)}" class="btn btn-success btn-sm float-end">CSV</a>
+                <a th:href="@{'/listar-todo'(format=csv)}" class="btn btn-success btn-sm float-end">CSV</a>
 
             </h4>
             <table class="table table-striped">

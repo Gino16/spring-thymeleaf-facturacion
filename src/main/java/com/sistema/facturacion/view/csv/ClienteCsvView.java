@@ -10,9 +10,10 @@ import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
-@Component("listar")
+@Component("listar-todo")
 public class ClienteCsvView extends AbstractView {
 
     public ClienteCsvView() {
@@ -28,7 +29,7 @@ public class ClienteCsvView extends AbstractView {
     protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"clientes.csv\"");
         httpServletResponse.setContentType(getContentType());
-        Page<Cliente> clientes = (Page<Cliente>) map.get("clientes");
+        List<Cliente> clientes = (List<Cliente>) map.get("clientes");
 
         ICsvBeanWriter beanWriter = new CsvBeanWriter(httpServletResponse.getWriter(), CsvPreference.STANDARD_PREFERENCE);
         String[] header = {"id", "nombre", "apellido", "email", "createAt"};

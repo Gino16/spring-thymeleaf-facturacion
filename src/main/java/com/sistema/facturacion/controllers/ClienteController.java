@@ -67,6 +67,13 @@ public class ClienteController {
         return "listar";
     }
 
+    @RequestMapping(value = "/listar-todo", method = RequestMethod.GET)
+    public String listarTodo(Model model){
+        List<Cliente> clientes = clienteService.findAll();
+        model.addAttribute("clientes", clientes);
+        return "listar-todo";
+    }
+
     @RequestMapping(value = "/form")
     public String crear(Map<String, Object> model) {
         Cliente cliente = new Cliente();
