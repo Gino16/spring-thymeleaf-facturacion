@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FacturacionApplication {
 
     public static void main(String[] args) {
-        DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/prueba-factura-spring").build();
 
+        SpringApplication.run(FacturacionApplication.class, args);
     }
 
 }
