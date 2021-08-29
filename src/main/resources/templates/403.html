@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-danger text-white">
+        <div class="card-header">Error: Acceso a recurso denegado!</div>
+        <div class="card-body">
+            <h5 class="card-title"> Usuario <span th:text="${#httpServletRequest.remoteUser}">, NO tienes el rol adecuado para ver el recurso</span>
+            </h5>
+            <a class="btn btn-outline-light" th:href="@{'/listar'}" role="button">Volver a inicio</a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

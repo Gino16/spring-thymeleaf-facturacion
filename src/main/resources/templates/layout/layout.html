@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="es">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -25,7 +27,24 @@
                     <li class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
                     </li>
                 </ul>
+
             </div>
+            <ul class="navbar-nav float-end mx-2">
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-primary" th:href="@{'/login'}">Sign In</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="dropdown">
+                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form id="logoutForm" th:action="@{'/logout'}" method="post">
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -38,6 +57,10 @@
 <div class="container"></div>
 
 <footer th:fragment="footer">
+    <p sec:authorize="isAuthenticated()">
+        Usuario logeado: <span sec:authentication="name"> </span> | Roles: <span
+            sec:authentication="principal.authorities"></span>
+    </p>
     <script th:src="@{'/js/jquery-3.6.0.min.js'}"></script>
     <script th:src="@{'/js/bootstrap.min.js'}"></script>
     <script th:src="@{'/js/popper.min.js'}"></script>
