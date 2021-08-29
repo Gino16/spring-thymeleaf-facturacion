@@ -29,6 +29,19 @@ public class FacturaController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @GetMapping("/ver/{id}")
+    public String ver(@PathVariable Long id, Model model, RedirectAttributes flash) {
+        //Factura factura = clienteService.findFacturaById(id);
+        Factura factura = clienteService.fetchByIdWithClienteWithItemFacturaWithProducto(id);
+        if (factura == null) {
+            flash.addFlashAttribute("error", "La factura no existe en la BD");
+            return "redirect:/listar";
+        }
+        model.addAttribute("factura", factura);
+        model.addAttribute("titulo", "Factura: ".concat(factura.getDescripcion()));
+        return "factura/ver";
+    }
+
     @GetMapping("/form/{clienteId}")
     public String crear(@PathVariable Long clienteId, Map<String, Object> model, RedirectAttributes flash) {
         Cliente cliente = clienteService.findOne(clienteId);
@@ -60,12 +73,12 @@ public class FacturaController {
                           RedirectAttributes flash,
                           SessionStatus status) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("titulo", "Crear Factura");
             return "factura/form";
         }
 
-        if (itemId == null || itemId.length == 0){
+        if (itemId == null || itemId.length == 0) {
             model.addAttribute("titulo", "Crear Factura");
             model.addAttribute("error", "Error: La factura NO PUEDE ESTAR VACIA SIN ITEMS");
             return "factura/form";
@@ -85,5 +98,17 @@ public class FacturaController {
         flash.addFlashAttribute("success", "La factura fue guardada correctamente");
 
         return "redirect:/ver/" + factura.getCliente().getId();
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
+        Factura factura = clienteService.findFacturaById(id);
+        if (factura != null) {
+            clienteService.deleteFactura(id);
+            flash.addFlashAttribute("success", "Factura eliminada");
+            return "redirect:/ver/" + factura.getCliente().getId();
+        }
+        flash.addFlashAttribute("error", "La factura no existe en la BD");
+        return "redirect:/listar";
     }
 }
