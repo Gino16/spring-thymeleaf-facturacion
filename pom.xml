@@ -69,6 +69,13 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
