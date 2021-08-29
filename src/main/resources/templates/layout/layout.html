@@ -34,13 +34,16 @@
                     <a class="btn btn-outline-primary" th:href="@{'/login'}">Sign In</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">
-                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         <span sec:authentication="name"></span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <form id="logoutForm" th:action="@{'/logout'}" method="post">
-                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
+                                    type="submit">Sign Out
+                            </button>
                         </form>
                     </div>
                 </li>
@@ -61,6 +64,14 @@
         Usuario logeado: <span sec:authentication="name"> </span> | Roles: <span
             sec:authentication="principal.authorities"></span>
     </p>
+
+    <div class="badge bg-secondary">
+        <p>
+            Existen 2 usuarios: <br>
+            USER: gino - 12345 <br>
+            ADMIN: admin - 12345
+        </p>
+    </div>
     <script th:src="@{'/js/jquery-3.6.0.min.js'}"></script>
     <script th:src="@{'/js/bootstrap.min.js'}"></script>
     <script th:src="@{'/js/popper.min.js'}"></script>
