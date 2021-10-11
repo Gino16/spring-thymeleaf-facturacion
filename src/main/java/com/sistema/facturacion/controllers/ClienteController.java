@@ -83,37 +83,41 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, SessionStatus status, RedirectAttributes flash) {
+    public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam(name = "file", required = false) MultipartFile foto, SessionStatus status, RedirectAttributes flash) {
 
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario de Cliente");
             return "form";
         }
 
-        if (!foto.isEmpty()) {
+        if (foto != null) {
+        	if (!foto.isEmpty()) {
 
-            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() !=null && cliente.getFoto().length() > 0){
-                Path root = Paths.get(rootPath).resolve(cliente.getFoto()).toAbsolutePath();
-                File archivo = root.toFile();
+                if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() !=null && cliente.getFoto().length() > 0){
+                    Path root = Paths.get(rootPath).resolve(cliente.getFoto()).toAbsolutePath();
+                    File archivo = root.toFile();
 
-                if (archivo.exists() && archivo.canRead()) {
-                    if (archivo.delete()) {
-                        flash.addFlashAttribute("info", "Foto cambiada del usuario " + cliente.getNombre());
+                    if (archivo.exists() && archivo.canRead()) {
+                        if (archivo.delete()) {
+                            flash.addFlashAttribute("info", "Foto cambiada del usuario " + cliente.getNombre());
+                        }
                     }
                 }
-            }
 
-            try {
-                byte[] bytes = foto.getBytes();
-                String uniqueFilename = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
-                Path rutaCompleta = Paths.get(rootPath + "//" + uniqueFilename);
-                Files.write(rutaCompleta, bytes);
-                flash.addFlashAttribute("info", "Se ha subido correctamnte la foto " + foto.getOriginalFilename());
-                cliente.setFoto(uniqueFilename);
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    byte[] bytes = foto.getBytes();
+                    String uniqueFilename = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
+                    Path rutaCompleta = Paths.get(rootPath + "//" + uniqueFilename);
+                    Files.write(rutaCompleta, bytes);
+                    flash.addFlashAttribute("info", "Se ha subido correctamnte la foto " + foto.getOriginalFilename());
+                    cliente.setFoto(uniqueFilename);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+		}else {
+			cliente.setFoto("");
+		}
 
         String mensajeFlash = (cliente.getId() != null) ? "Cliente editado con exito" : "Cliente creado con exito!";
 

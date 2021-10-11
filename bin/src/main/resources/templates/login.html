@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card border-primary text-center">
+        <div class="card-header">Por favor inicie sesion</div>
+        <div class="card-body ">
+            <form th:action="@{/login}" method="post">
+
+                <div class="input-group my-2">
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" name="username" id="username" placeholder="Username"
+                               required autofocus>
+                    </div>
+                </div>
+                <div class="input-group my-2">
+                    <div class="col-sm-4">
+                        <input class="form-control" type="password" name="password" id="password"
+                               placeholder="Password"
+                               required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input class="btn btn-lg btn-primary block" type="submit" value="Sign In">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
