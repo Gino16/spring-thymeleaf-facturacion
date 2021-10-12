@@ -39,7 +39,7 @@
                         <span sec:authentication="name"></span>
                     </a>
 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                         <form id="logoutForm" th:action="@{'/logout'}" method="post">
                             <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
                                     type="submit">Sign Out
